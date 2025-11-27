@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c6xngtwrtqgi"
+path="res://.godot/imported/AMIDY & Skybreak - Where We Begin (Lyrics).mp3-15472e31d4c5b888a711a25807ecdf6f.mp3str"
+
+[deps]
+
+source_file="res://test audio/AMIDY & Skybreak - Where We Begin (Lyrics).mp3"
+dest_files=["res://.godot/imported/AMIDY & Skybreak - Where We Begin (Lyrics).mp3-15472e31d4c5b888a711a25807ecdf6f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

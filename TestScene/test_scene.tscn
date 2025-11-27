@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://g2kyk4lc6808"]
+
+[ext_resource type="Script" uid="uid://b5xri1b71ffko" path="res://TestScene/test_scene.gd" id="1_jtt75"]
+[ext_resource type="AudioStream" uid="uid://c6xngtwrtqgi" path="res://test audio/AMIDY & Skybreak - Where We Begin (Lyrics).mp3" id="1_pg2wg"]
+
+[node name="TEST SCENE" type="Node2D" node_paths=PackedStringArray("song")]
+script = ExtResource("1_jtt75")
+song = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_pg2wg")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://elia3wixvmra"]
+
+[ext_resource type="Script" uid="uid://bnk283r3rb5df" path="res://AudioVisualizer2D/audio_visualizer_2d.gd" id="1_3ibyr"]
+
+[node name="AudioVisualizer2D" type="Node2D"]
+script = ExtResource("1_3ibyr")
