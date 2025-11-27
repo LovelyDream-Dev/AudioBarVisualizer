@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://g2kyk4lc6808"]
+
+[ext_resource type="Script" uid="uid://b5xri1b71ffko" path="res://TestScene/test_scene.gd" id="1_jtt75"]
+[ext_resource type="AudioStream" uid="uid://doxpdlw7w30gf" path="res://test audio/they asked me how we got here.mp3" id="2_eaejv"]
+[ext_resource type="PackedScene" uid="uid://elia3wixvmra" path="res://AudioVisualizer2D/audio_visualizer_2d.tscn" id="2_udmxp"]
+[ext_resource type="Texture2D" uid="uid://c6xtkknewr6g2" path="res://icon.svg" id="3_eaejv"]
+
+[sub_resource type="Curve2D" id="Curve2D_udmxp"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -250, 0, 0, 0, 0, 0, 250, 0)
+}
+point_count = 2
+
+[node name="TEST SCENE" type="Node2D" node_paths=PackedStringArray("song")]
+script = ExtResource("1_jtt75")
+song = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_eaejv")
+
+[node name="AudioVisualizer2D" parent="." instance=ExtResource("2_udmxp")]
+shape = SubResource("Curve2D_udmxp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(0, 150)
+texture = ExtResource("3_eaejv")

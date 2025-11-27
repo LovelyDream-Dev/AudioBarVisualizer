@@ -36,7 +36,7 @@ var _spectrumEffectIndex:int
 @export_range(0.0, 1.0, 0.1) var smoothing:float = 0.5
 @export_category("Frequency")
 @export_group("Range")
-var _minimumFrequency:float 
+var _minimumFrequency:float = 20.0
 ## The minimum frequency that the bars will react to. Note: A smaller range of frequencies will result in 
 ## less-accurate visualization of audio.
 @export_range(20.0, 20000.0, 0.1) var minimumFrequency:float = 20.0:
@@ -44,7 +44,7 @@ var _minimumFrequency:float
 		manage_minimum_frequency_variable(value)
 	get:
 		return _minimumFrequency
-var _maximumFrequency:float
+var _maximumFrequency:float = 20000.0
 ## The maximum frequency that the bars will react to. Note: A smaller range of frequencies will result in 
 ## less-accurate visualization of audio.
 @export_range(20.0, 20000.0, 0.1) var maximumFrequency:float = 2500.0:
@@ -87,18 +87,22 @@ func manage_maximum_frequency_variable(value:float):
 		_maximumFrequency = 22000.0
 
 func get_frequency_bands() -> Array:
-	var result:Array[Vector2]
-	var logMinFrequency:float = log(minimumFrequency)
-	var logMaxFrequency:float = log(maximumFrequency)
+	var result:Array[Vector2] = []
+	
+	# clamp minimum and maximum frequencies to safe values
+	var safeMin = max(minimumFrequency, 0.0001)
+	var safeMax = max(maximumFrequency, safeMin + 1.0)  # ensure max > min
+
+	var logMinFrequency:float = log(safeMin)
+	var logMaxFrequency:float = log(safeMax)
 
 	for bar in range(barCount):
-		# these variables represent the fractional portion of where the bar begins and ends within the total range
 		var sliceBegin = float(bar) / barCount
 		var sliceEnd = float(bar + 1) / barCount
-		# similarly to the slice variables, these two represent the beginning and ending frequencies of the bar
 		var frequency1 = exp(sliceBegin * (logMaxFrequency - logMinFrequency) + logMinFrequency)
 		var frequency2 = exp(sliceEnd * (logMaxFrequency - logMinFrequency) + logMinFrequency)
 		result.append(Vector2(frequency1, frequency2))
+	
 	return result
 
 func get_points_along_curve() -> Array[Vector2]:
@@ -122,20 +126,17 @@ func update_visualizer() -> void:
 	var bands:Array[Vector2] = get_frequency_bands()
 	var points:Array[Vector2] = get_points_along_curve()
 
-	var kickMinFreq:float = 20.0
-	var kickMaxFreq:float = 120.0
-
 	for bar in range(barCount):
 		var band = bands[bar]
 		var p = points[bar]
 
 		# get db
 		var magnitude:Vector2 = analyzer.get_magnitude_for_frequency_range(band.x, band.y)
-		var amplitude = (magnitude.x + magnitude.y) / 2
+		var amplitude = max((magnitude.x + magnitude.y) / 2, 0.0000001)
 		amplitude = max(amplitude, 0.000001)
 		var db = linear_to_db(amplitude)
 		db = clamp(db, -80, 0)
-		var height = float(clamp((db + 80.0) * pixelsPerDecibel, 0, maxBarHeight))
+		var height = clamp((db + 80.0) * pixelsPerDecibel, 0, maxBarHeight)
 
 		# boost lows
 		var centerFrequency:float = (band.x + band.y) / 2
@@ -149,14 +150,7 @@ func update_visualizer() -> void:
 		smoothedHeights[bar] = lerp(smoothedHeights[bar], height, 1.0 - freqSmoothFactor)
 		var peakPoint = Vector2(p.x, p.y - smoothedHeights[bar])
 
-		# fx on kick drum
-		var offsetX:float = 0.0
-		var kickMagnitude:Vector2 = analyzer.get_magnitude_for_frequency_range(kickMinFreq, kickMaxFreq)
-		var kickAmplitude:float = (kickMagnitude.x + kickMagnitude.y) / 2
-		var kickMaxOffset:float = 50.0
-		var kickOffset = clamp(kickAmplitude * pixelsPerDecibel * 2.0, 0, kickMaxOffset)
-		if centerFrequency < kickMaxFreq:
-			offsetX = -kickOffset * (1.0 - normFreq)  # strongest at lowest freqs, fade toward high freqs
+		# fx on low frequencies
 
 		# draw bars
 		draw_line(p, peakPoint, barColor, barWidth)
