@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://doxpdlw7w30gf"
+path="res://.godot/imported/they asked me how we got here.mp3-21a72c01b0774dd48acbde1272cd2f33.mp3str"
+
+[deps]
+
+source_file="res://test audio/they asked me how we got here.mp3"
+dest_files=["res://.godot/imported/they asked me how we got here.mp3-21a72c01b0774dd48acbde1272cd2f33.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

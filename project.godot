@@ -15,6 +15,10 @@ run/main_scene="uid://g2kyk4lc6808"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://c14o5i8yl23tj"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
