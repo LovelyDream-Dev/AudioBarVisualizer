@@ -20,6 +20,13 @@ stream = ExtResource("2_eaejv")
 
 [node name="AudioVisualizer2D" parent="." instance=ExtResource("2_udmxp")]
 shape = SubResource("Curve2D_udmxp")
+smoothing = 0.0
+global_attack_speed = 100.0
+global_release_speed = 100.0
+bass_boost = 3.0
+bass_emphasis_curve = 1.0
+peak_fall_speed = 10.0
+maximumFrequency = 5000.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
