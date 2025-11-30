@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://g2kyk4lc6808"]
 
 [ext_resource type="Script" uid="uid://b5xri1b71ffko" path="res://TestScene/test_scene.gd" id="1_jtt75"]
-[ext_resource type="AudioStream" uid="uid://doxpdlw7w30gf" path="res://test audio/they asked me how we got here.mp3" id="2_eaejv"]
+[ext_resource type="AudioStream" uid="uid://65fojbrq1y5i" path="res://test audio/audio [music].wav" id="2_eaejv"]
 [ext_resource type="PackedScene" uid="uid://elia3wixvmra" path="res://AudioVisualizer2D/audio_visualizer_2d.tscn" id="2_udmxp"]
 [ext_resource type="Texture2D" uid="uid://c6xtkknewr6g2" path="res://icon.svg" id="3_eaejv"]
 
@@ -21,12 +21,15 @@ stream = ExtResource("2_eaejv")
 [node name="AudioVisualizer2D" parent="." instance=ExtResource("2_udmxp")]
 shape = SubResource("Curve2D_udmxp")
 smoothing = 0.0
-global_attack_speed = 100.0
-global_release_speed = 100.0
-bass_boost = 3.0
-bass_emphasis_curve = 1.0
-peak_fall_speed = 10.0
-maximumFrequency = 5000.0
+globalAttackSpeed = 100.0
+globalReleaseSpeed = 100.0
+bassEmphasisCurve = 1.0
+lowBandCount = 8
+lowBaselineRate = 2.0
+transientGain = 8.0
+transientPower = 4.0
+bellWidth = 0.5
+bellMaxMultiplier = 8.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
